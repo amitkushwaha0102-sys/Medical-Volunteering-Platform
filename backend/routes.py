@@ -1,8 +1,8 @@
-from flask import request, jsonify
+from flask import request, jsonify, Blueprint
 from models import db, Patient, Volunteer
-from app import app
+routes = Blueprint('routes', __name__)
 
-@app.route('/register-patient', methods=['POST'])
+@routes.route('/register-patient', methods=['POST'])
 def register_patient():
     data = request.get_json()
     patient = Patient(
@@ -16,7 +16,7 @@ def register_patient():
     db.session.commit()
     return jsonify({'message': 'Patient registered successfully'}), 201
 
-@app.route('/register-volunteer', methods=['POST'])
+@routes.route('/register-volunteer', methods=['POST'])
 def register_volunteer():
     data = request.get_json()
     volunteer = Volunteer(
@@ -30,7 +30,7 @@ def register_volunteer():
     db.session.commit()
     return jsonify({'message': 'Volunteer registered successfully'}), 201
 
-@app.route('/volunteers/<city>', methods=['GET'])
+@routes.route('/volunteers/<city>', methods=['GET'])
 def get_volunteers(city):
     volunteers = Volunteer.query.filter_by(city=city).all()
     result = []

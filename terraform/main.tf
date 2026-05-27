@@ -6,6 +6,14 @@ terraform {
     }
   }
   required_version = ">= 1.4"
+
+  backend "s3" {
+    bucket         = "medical-volunteering-tf-state-amit"
+    key            = "prod/terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "medical-volunteering-tf-lock"
+    encrypt        = true
+  }
 }
 
 provider "aws"{
@@ -16,6 +24,7 @@ resource "aws_instance" "application_server_ec2"{
     ami = var.ami_id
     instance_type = var.instance_type
     subnet_id = aws_subnet.public.id
+    key_name = "medical-volunteering"
     vpc_security_group_ids =  [aws_security_group.ec2_sg.id]
     user_data = file("userdata.sh")
     tags = { 
