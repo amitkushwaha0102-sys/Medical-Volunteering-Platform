@@ -1,4 +1,4 @@
-const API_URL = 'http://13.205.15.119:5000';
+const API_URL = 'http://13.205.15.119/api';
 
 // Patient form
 const patientForm = document.getElementById('patientForm');
