@@ -1,0 +1,56 @@
+---
+- name: Setup Medical Volunteering Server
+  hosts: webservers
+  become: yes
+  
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+    
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+    
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+    
+    - name: Clone application repository
+      git:
+        repo: https://github.com/amitkushwaha0102-sys/Medical-Volunteering-Platform.git
+        dest: /home/ubuntu/Medical-Volunteering-Platform
+        force: yes
+
+    - name: Run application container
+      docker_container:
+        name: medical-app
+        image: medical-volunteering
+        state: started
+        restart_policy: always
+        ports:
+          - "5000:5000"
+        env:
+          DATABASE_URL: "mysql+pymysql://admin:amit1234@medical-volunteering-db.c1wuywioqeb5.ap-south-1.rds.amazonaws.com:3306/medical_db"
+          SECRET_KEY: "dev-key-123"
