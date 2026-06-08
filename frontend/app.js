@@ -1,4 +1,4 @@
-const API_URL = 'http://13.207.59.217/api';
+const API_URL = 'http://13.207.162.159/api';
 
 // Patient form
 const patientForm = document.getElementById('patientForm');

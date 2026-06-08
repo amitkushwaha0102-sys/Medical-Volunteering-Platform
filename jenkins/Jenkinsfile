@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage ('Build') {
+            steps   {
+                sh 'docker build -t medical-volunteering ./backend'
+            }
+        }
+        stage ('Deploy') {
+            steps {
+                sh '''
+            docker stop medical-app || true
+            docker rm medical-app || true
+            docker run -d \
+                --name medical-app \
+                -p 5000:5000 \
+                -e DATABASE_URL="mysql+pymysql://admin:amit1234@medical-volunteering-db.c1wuywioqeb5.ap-south-1.rds.amazonaws.com:3306/medical_db" \
+                -e SECRET_KEY="dev-key-123" \
+                medical-volunteering
+        '''
+            }
+        }
+    }
+}
