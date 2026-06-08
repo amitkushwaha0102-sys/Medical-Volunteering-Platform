@@ -20,7 +20,7 @@ pipeline {
             docker run -d \
                 --name medical-app \
                 -p 5000:5000 \
-                -e DATABASE_URL="mysql+pymysql://admin:amit1234@medical-volunteering-db.c1wuywioqeb5.ap-south-1.rds.amazonaws.com:3306/medical_db" \
+                -e DATABASE_URL="mysql+pymysql://admin:Amit@123@medical-volunteering-db.c1wuywioqeb5.ap-south-1.rds.amazonaws.com:3306/medical_db" \
                 -e SECRET_KEY="dev-key-123" \
                 medical-volunteering
         '''
