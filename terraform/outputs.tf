@@ -12,3 +12,8 @@ output "vpc_id" {
   description = "vpc require for id"
   value       = aws_vpc.main.id
 }
+
+output "alb_dns_name" {
+  description = "ALB DNS name to access application"
+  value       = aws_lb.main.dns_name
+}
