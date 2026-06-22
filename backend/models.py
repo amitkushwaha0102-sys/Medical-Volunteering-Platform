@@ -18,4 +18,4 @@ class Volunteer(db.Model):
     father_name = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(50), nullable=False)
     contact_number = db.Column(db.String(15), nullable=False)
-    specialization = db.Column(db.String(200), nullable=False)
+    specialization = db.Column(db.String(200), nullable=False)# Rating feature placeholder
